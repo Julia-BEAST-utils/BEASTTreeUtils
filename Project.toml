@@ -1,0 +1,13 @@
+name = "BEASTTreeUtils"
+uuid = "50d08f4b-470a-40f3-9a42-30e5f4b6ae4e"
+authors = ["Gabe Hassler <gabriel.w.hassler@gmail.com> and contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
