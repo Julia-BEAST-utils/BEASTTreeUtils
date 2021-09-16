@@ -1,7 +1,9 @@
 module BEASTTreeUtils
 
 export rtree,
-       standardize_height!
+       standardize_height!,
+       writeTopology,
+       vcv
 
 # Internal library for working with trees. functions rely heavily on PhyloNetworks.jl
 
@@ -16,6 +18,9 @@ end
 
 @deprecate parse_newick(newick) PhyloNetworks.readTopology(newick)
 
+function rnewick(taxa::Vector{String}; args...)
+    return writeTopology(rtree(taxa; args...))
+end
 
 ### Generate HybridTree with random topologies / branch lenghts
 
@@ -193,12 +198,18 @@ function leaf_distances(net::HybridNetwork)
     return dists
 end
 
+import PhyloNetworks.vcv
+
 function vcv(net::HybridNetwork, taxa::Vector{String})
     v = PhyloNetworks.vcv(net)
     sim_taxa = string.(names(v))
 
     perm = indexin(taxa, sim_taxa)
     V = Matrix(v)[perm, perm]
+end
+
+function vcv(nwk::String, taxa::Vector{String})
+    return vcv(readTopology(nwk), taxa)
 end
 
 function scale_to!(net::HybridNetwork, height::Float64)
